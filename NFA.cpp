@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int nodes = 0;
+static int nodes = 0;
 
 NFA::NFA(Node *start, Node *end) {
     this->start = start;
@@ -86,7 +86,11 @@ NFA *NFA::evaluate_expression(string s, int type) {
         if (s[i] == '\\') {
             NFA *aux = new NFA(new Node(nodes, type), new Node(nodes + 1, type));
             nodes += 2;
-            aux->start->adjacent[s[i + 1]].push_back(aux->end);
+            if(s[i+1] != 'L') {
+                aux->start->adjacent[s[i + 1]].push_back(aux->end);
+            } else {
+                aux->start->adjacent['\0'].push_back(aux->end);
+            }
             aux->end->isAccepting = true;
             nfa.push(aux);
             i++;
