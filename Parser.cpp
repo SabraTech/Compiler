@@ -58,7 +58,7 @@ map<string, string> Parser::parse_out_definitions(vector<string> &rules) {
             RHS = trim(RHS);
             RHS = extract(RHS);
             data[LHS] = RHS;
-            rules.erase(rules.begin() + i);
+            // rules.erase(rules.begin() + i);
         }
     }
     return data;
@@ -75,7 +75,7 @@ map<string, string> Parser::parse_out_expressions(vector<string> &rules) {
             string RHS = line.substr(index_of_colon + 1);
             RHS = trim(RHS);
             data[LHS] = RHS;
-            rules.erase(rules.begin() + i);
+            // rules.erase(rules.begin() + i);
         }
     }
     return data;
@@ -95,7 +95,7 @@ vector<string> Parser::parse_out_keywords(vector<string> &rules) {
                 pos = found + 1;
             }
             keywords.push_back(words.substr(pos));
-            rules.erase(rules.begin() + i);
+            // rules.erase(rules.begin() + i);
         }
     }
     return keywords;
@@ -115,7 +115,7 @@ vector<string> Parser::parse_out_punctuations(vector<string> &rules) {
                 pos = found + 1;
             }
             punctuations.push_back(words.substr(pos));
-            rules.erase(rules.begin() + i);
+            // rules.erase(rules.begin() + i);
         }
     }
     return  punctuations;

@@ -98,7 +98,7 @@ void replaceToken(string &in, string &out){
 }
 
 int main() {
-    const char * filename = "home/sabra/ClionProjects/Compiler/Rules.txt";
+    /*const char * filename = "home/sabra/ClionProjects/Compiler/Rules.txt";
     ifstream myFile;
     myFile.open(filename, ios::in);
     string line;
@@ -109,15 +109,29 @@ int main() {
     }else{
         cout << "Can not open the file" << endl;
     }
-    myFile.close();
+    myFile.close();*/
 
+    lexical_rules = {"letter = a-z | A-Z",
+                     "digit = 0-9",
+                     "id: letter (letter | digit)*",
+                     "digits = digit+",
+                     "{boolean int float}",
+                     "num: digit+ | digit+ . digits ( \\L | E digits)",
+                     "relop: \\=\\= | !\\= | > | >\\= | < | <\\=",
+                     "assign: =",
+                     "{ if else while }",
+                     "[; , \\( \\) { }]",
+                     "addop: \\+ | -",
+                     "mulop: \\* | /"
+
+    };
     // parse
     def_map = Parser::parse_out_definitions(lexical_rules);
     exp_map = Parser::parse_out_expressions(lexical_rules);
     keywords = Parser::parse_out_keywords(lexical_rules);
     punctuations = Parser::parse_out_punctuations(lexical_rules);
 
-    add_concatination_def();
+
     // substitute
     vector<pair<int, string>> list;
     for(auto const& entry : def_map) {
@@ -138,6 +152,7 @@ int main() {
                 str += value.substr(found + key.size(),value.size());
                 def_map[y.first] = str;
                 found = strstr(str,key);
+                value = y.second;
             }
         }
     }
@@ -154,6 +169,7 @@ int main() {
                 str += value.substr(found + key.size(), value.size());
                 exp_map[y.first] = str;
                 found = strstr(str, key);
+                value = y.second;
             }
         }
     }
@@ -164,6 +180,7 @@ int main() {
         exp_map[entry.first] = remove_spaces(entry.second);
     }
 
+    add_concatination_def();
     add_concatination_expression();
 
 
@@ -175,7 +192,7 @@ int main() {
     }
 
     cout << "exp map" << endl;
-    for (auto const& x : def_map)
+    for (auto const& x : exp_map)
     {
         cout << x.first << " : " << x.second << endl ;
     }
