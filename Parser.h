@@ -17,10 +17,10 @@ public:
 
 
 private:
-    inline string left_trim(string &);
-    inline string right_trim(string &);
-    inline string trim(string &);
-    inline string extract(string);
+    static inline string left_trim(string &);
+    static inline string right_trim(string &);
+    static inline string trim(string &);
+    static inline string extract(string);
 
 };
 

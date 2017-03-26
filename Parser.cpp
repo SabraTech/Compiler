@@ -45,7 +45,7 @@ inline string Parser::extract(string RHS){
     return "(" + RHS_with_or + ")";
 }
 
-static map<string, string> Parser::parse_out_definitions(vector<string> &rules) {
+map<string, string> Parser::parse_out_definitions(vector<string> &rules) {
     map<string, string> data;
     for(int i = 0; i < rules.size(); i++){
         string line = rules[i];
@@ -57,14 +57,14 @@ static map<string, string> Parser::parse_out_definitions(vector<string> &rules) 
             string RHS = line.substr(index_of_equal + 1);
             RHS = trim(RHS);
             RHS = extract(RHS);
-            data.insert({LHS, RHS});
+            data[LHS] = RHS;
             rules.erase(rules.begin() + i);
         }
     }
     return data;
 }
 
-static  map<string, string> Parser::parse_out_expressions(vector<string> &rules) {
+map<string, string> Parser::parse_out_expressions(vector<string> &rules) {
     map<string, string> data;
     for(int i = 0; i < rules.size(); i++){
         string line = rules[i];
@@ -74,14 +74,14 @@ static  map<string, string> Parser::parse_out_expressions(vector<string> &rules)
             LHS = trim(LHS);
             string RHS = line.substr(index_of_colon + 1);
             RHS = trim(RHS);
-            data.insert({LHS, RHS});
+            data[LHS] = RHS;
             rules.erase(rules.begin() + i);
         }
     }
     return data;
 }
 
-static vector<string> Parser::parse_out_keywords(vector<string> &rules) {
+vector<string> Parser::parse_out_keywords(vector<string> &rules) {
     vector<string> keywords;
     for(int i = 0; i < rules.size(); i++){
         string line = rules[i];
@@ -101,7 +101,7 @@ static vector<string> Parser::parse_out_keywords(vector<string> &rules) {
     return keywords;
 }
 
-static vector<string> Parser::parse_out_punctuations(vector<string> &rules) {
+vector<string> Parser::parse_out_punctuations(vector<string> &rules) {
     vector<string> punctuations;
     for(int i = 0; i < rules.size(); i++){
         string line = rules[i];

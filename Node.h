@@ -2,9 +2,12 @@
 // Created by sabra on 26/03/17.
 //
 
+#include <bits/stdc++.h>
+
 #ifndef COMPILER_NODE_H
 #define COMPILER_NODE_H
 
+using namespace std;
 
 class Node {
 public:
