@@ -19,7 +19,7 @@ string add_concatination_to_string(string a) {
     string ans;
     ans =+ a[0];
     for(int i = 1; i < a.size(); i++) {
-        if(a[i] == '|' || a[i-1] == '|'){
+        if(a[i] == '|' || a[i-1] == '|' || a[i-1] == '\\'){
             ans += a[i];
             continue;
         }
