@@ -75,7 +75,7 @@ void NFA::operation(stack<NFA *> &nfa, char t, int type) {
         nfa.pop();
         nfa.push(NFA_concatenate(a, b));
     } else {
-        cout << "error";
+        cout << "error no valid NFA operation";
     }
 }
 
@@ -104,22 +104,22 @@ NFA *NFA::evaluate_expression(string s, int type) {
             }
             operations.pop();
         } else if (s[i] == '|') {
-            while (operations.top() != '(') {
+            while (!operations.empty() && operations.top() != '(') {
                 char t = operations.top();
-                operations.pop();
                 if (t == '@' || t == '*' || t == '+') {
                     operation(nfa, t, type);
+                    operations.pop();
                 } else {
                     break;
                 }
             }
             operations.push('|');
         } else if (s[i] == '@') {
-            while (operations.top() != '(') {
+            while (!operations.empty() && operations.top() != '(') {
                 char t = operations.top();
-                operations.pop();
                 if (t == '*' || t == '+') {
                     operation(nfa, t, type);
+                    operations.pop();
                 } else {
                     break;
                 }
@@ -141,7 +141,7 @@ NFA *NFA::evaluate_expression(string s, int type) {
         operation(nfa, t, type);
     }
     if (nfa.size() != 1) {
-        cout << "5555555555555555555";
+        cout << nfa.size() << " error not empty stack\n";
     }
     return nfa.top();
 }

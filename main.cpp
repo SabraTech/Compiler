@@ -182,7 +182,13 @@ int main() {
 
     add_concatination_def();
     add_concatination_expression();
-
+    for(int i = 0; i < keywords.size(); i++) {
+        keywords[i] = add_concatination_to_string(remove_spaces(keywords[i]));
+        if(keywords[i][0] == '\0') {
+            continue;
+        }
+        cout << keywords[i] << endl;
+    }
 
     // print to test here
     cout << "def map" << endl;
@@ -197,8 +203,30 @@ int main() {
         cout << x.first << " : " << x.second << endl ;
     }
 
-    // create NFA for expressions, keywords and punctuations
-    // or all NFAs to one big NFA
+    //Testing evaluating expression
+    NFA* final_nfa = NULL;
+    NFA* dummy = new NFA(new Node(0,0), new Node(0,0));
+    for(auto x : exp_map) {
+        NFA* aux = dummy->evaluate_expression(x.second, 2);
+        if(final_nfa == NULL) {
+            final_nfa = aux;
+        } else {
+            final_nfa = dummy->NFA_or(final_nfa, aux, 3);
+        }
+    }
+
+    for(auto x : punctuations) {
+        cout << x << endl;
+        NFA* aux = dummy->evaluate_expression(x, 1);
+        final_nfa = dummy->NFA_or(final_nfa, aux, 3);
+    }
+    for(auto x : keywords) {
+        if(x[0] == '\0') {
+            continue;
+        }
+        NFA* aux = dummy->evaluate_expression(x, 0);
+        final_nfa = dummy->NFA_or(final_nfa, aux, 2);
+    }
     // transfer NFA to DFA
     // minimize DFA
     // enter code

@@ -86,7 +86,7 @@ vector<string> Parser::parse_out_keywords(vector<string> &rules) {
     for(int i = 0; i < rules.size(); i++){
         string line = rules[i];
         size_t index_of_open_braces = line.find("{");
-        if(index_of_open_braces != string::npos){
+        if(index_of_open_braces != string::npos && index_of_open_braces == 0){
             size_t index_of_close_braces = line.find("}");
             string words = line.substr(index_of_open_braces + 1, index_of_close_braces - 1);
             size_t pos = 0, found;
