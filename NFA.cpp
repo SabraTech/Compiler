@@ -73,7 +73,7 @@ void NFA::operation(stack<NFA *> &nfa, char t, int type) {
         nfa.pop();
         NFA *b = nfa.top();
         nfa.pop();
-        nfa.push(NFA_concatenate(a, b));
+        nfa.push(NFA_concatenate(b, a));
     } else {
         cout << "error no valid NFA operation";
     }

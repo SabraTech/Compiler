@@ -206,26 +206,30 @@ int main() {
     //Testing evaluating expression
     NFA* final_nfa = NULL;
     NFA* dummy = new NFA(new Node(0,0), new Node(0,0));
+    int expression_num = 2;
+
+    // maps between expression_num and the corresponding label
+    unordered_map<int, string> mp;
     for(auto x : exp_map) {
-        NFA* aux = dummy->evaluate_expression(x.second, 2);
+        mp[expression_num] = x.first;
+        NFA* aux = dummy->evaluate_expression(x.second, expression_num++);
         if(final_nfa == NULL) {
             final_nfa = aux;
         } else {
-            final_nfa = dummy->NFA_or(final_nfa, aux, 3);
+            final_nfa = dummy->NFA_or(final_nfa, aux, 20);
         }
     }
 
     for(auto x : punctuations) {
-        cout << x << endl;
         NFA* aux = dummy->evaluate_expression(x, 1);
-        final_nfa = dummy->NFA_or(final_nfa, aux, 3);
+        final_nfa = dummy->NFA_or(final_nfa, aux, 20);
     }
     for(auto x : keywords) {
         if(x[0] == '\0') {
             continue;
         }
         NFA* aux = dummy->evaluate_expression(x, 0);
-        final_nfa = dummy->NFA_or(final_nfa, aux, 2);
+        final_nfa = dummy->NFA_or(final_nfa, aux, 20);
     }
     // transfer NFA to DFA
     // minimize DFA
