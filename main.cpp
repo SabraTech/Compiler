@@ -18,9 +18,7 @@ vector<string> keywords, punctuations;
 map<string, string> exp_map;
 
 int main() {
-    /*const char * filename = "home/sabra/ClionProjects/Compiler/Rules.txt";
-    ifstream myFile;
-    myFile.open(filename, ios::in);
+    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -29,9 +27,11 @@ int main() {
     }else{
         cout << "Can not open the file" << endl;
     }
-    myFile.close();*/
-
-    lexical_rules = {"letter = a-z | A-Z",
+    myFile.close();
+    for(string s : lexical_rules){
+        cout << s << endl;
+    }
+    /*lexical_rules = {"letter = a-z | A-Z",
                      "digit = 0-9",
                      "id: letter (letter | digit)*",
                      "digits = digit+",
@@ -44,7 +44,7 @@ int main() {
                      "addop: \\+ | -",
                      "mulop: \\* | /"
 
-    };
+    };*/
     // parse
     def_map = Parser::parse_out_definitions(lexical_rules);
     exp_map = Parser::parse_out_expressions(lexical_rules);
