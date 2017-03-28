@@ -11,10 +11,11 @@ using namespace std;
 
 class Node {
 public:
-    map<char, vector<Node*>> adjacent;
+    map<char, vector<Node *>> adjacent;
     int type;
     int id;
     bool isAccepting;
+
     Node(int);
 };
 

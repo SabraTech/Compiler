@@ -11,18 +11,24 @@
 
 using namespace std;
 
-class DFA{
+class DFA {
 public:
     DFA();
+
     int id;
-    vector<Node*> inner_nodes;
+    vector<Node *> inner_nodes;
     int type;
-    map<char, DFA*> adjacent;
+    map<char, DFA *> adjacent;
     bool isAccepting;
-    static void epsilon_closure(Node*, set<int> &, vector<Node*> &, bool &, int &);
-    static DFA* convert_NFA_to_DFA(NFA*);
-    static int match_dfa(DFA*, string);
-    static void printDFA(DFA*);
+
+    static void epsilon_closure(Node *, set<int> &, vector<Node *> &, bool &, int &);
+
+    static DFA *convert_NFA_to_DFA(NFA *);
+
+    static int match_dfa(DFA *, string);
+
+    static void printDFA(DFA *);
+
 private:
 
 

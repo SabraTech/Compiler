@@ -79,7 +79,7 @@ void NFA::operation(stack<NFA *> &nfa, char t, int type) {
         nfa.pop();
         nfa.push(NFA_concatenate(b, a, type));
     } else {
-        cout << "error no valid NFA operation";
+        cout << "error no valid NFA operation function NFA::operation" << endl;
     }
 }
 
@@ -89,7 +89,7 @@ NFA *NFA::evaluate_expression(string s, int type) {
     for (int i = 0; i < s.size(); i++) {
         if (s[i] == '\\') {
             NFA *aux = new NFA(new Node(type), new Node(type));
-            if(s[i+1] != 'L') {
+            if (s[i + 1] != 'L') {
                 aux->start->adjacent[s[i + 1]].push_back(aux->end);
             } else {
                 aux->start->adjacent['\0'].push_back(aux->end);
@@ -143,7 +143,7 @@ NFA *NFA::evaluate_expression(string s, int type) {
         operation(nfa, t, type);
     }
     if (nfa.size() != 1) {
-        cout << nfa.size() << " error not empty stack\n";
+        cout << nfa.size() << " error not empty stack function NFA::evaluate_expression\n";
     }
     return nfa.top();
 }

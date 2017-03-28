@@ -11,15 +11,21 @@ using namespace std;
 class Parser {
 public:
     static map<string, string> parse_out_definitions(vector<string> &);
+
     static map<string, string> parse_out_expressions(vector<string> &);
+
     static vector<string> parse_out_keywords(vector<string> &);
+
     static vector<string> parse_out_punctuations(vector<string> &);
 
 
 private:
     static inline string left_trim(string &);
+
     static inline string right_trim(string &);
+
     static inline string trim(string &);
+
     static inline string extract(string);
 
 };
