@@ -11,11 +11,11 @@ using namespace std;
 
 class Node {
 public:
-    unordered_map<char, vector<Node*>> adjacent;
+    map<char, vector<Node*>> adjacent;
     int type;
     int id;
     bool isAccepting;
-    Node(int, int);
+    Node(int);
 };
 
 

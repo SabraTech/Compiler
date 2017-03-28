@@ -8,16 +8,13 @@
 
 using namespace std;
 
-static int nodes = 0;
-
 NFA::NFA(Node *start, Node *end) {
     this->start = start;
     this->end = end;
 }
 
 NFA *NFA::NFA_or(NFA *a, NFA *b, int type) {
-    NFA *result = new NFA(new Node(nodes, type), new Node(nodes + 1, type));
-    nodes += 2;
+    NFA *result = new NFA(new Node(type), new Node(type));
     result->start->adjacent['\0'].push_back(a->start);
     result->start->adjacent['\0'].push_back(b->start);
     a->end->adjacent['\0'].push_back(result->end);
@@ -28,15 +25,19 @@ NFA *NFA::NFA_or(NFA *a, NFA *b, int type) {
     return result;
 }
 
-NFA *NFA::NFA_concatenate(NFA *a, NFA *b) {
+NFA *NFA::NFA_concatenate(NFA *a, NFA *b, int type) {
+    NFA *result = new NFA(new Node(type), new Node(type));
+    result->start->adjacent['\0'].push_back(a->start);
+    b->end->adjacent['\0'].push_back(result->end);
     a->end->adjacent['\0'].push_back(b->start);
     a->end->isAccepting = false;
-    return a;
+    b->end->isAccepting = false;
+    result->end->isAccepting = true;
+    return result;
 }
 
 NFA *NFA::NFA_star(NFA *a, int type) {
-    NFA *result = new NFA(new Node(nodes, type), new Node(nodes + 1, type));
-    nodes += 2;
+    NFA *result = new NFA(new Node(type), new Node(type));
     a->end->isAccepting = false;
     a->end->adjacent['\0'].push_back(a->start);
     a->end->adjacent['\0'].push_back(result->end);
@@ -46,34 +47,37 @@ NFA *NFA::NFA_star(NFA *a, int type) {
     return result;
 }
 
-NFA *NFA::NFA_plus(NFA *a) {
+NFA *NFA::NFA_plus(NFA *a, int type) {
+    NFA *result = new NFA(new Node(type), new Node(type));
+    a->end->isAccepting = false;
     a->end->adjacent['\0'].push_back(a->start);
-    return a;
+    a->end->adjacent['\0'].push_back(result->end);
+    result->start->adjacent['\0'].push_back(a->start);
+    result->end->isAccepting = true;
+    return result;
 }
 
 void NFA::operation(stack<NFA *> &nfa, char t, int type) {
     if (t == '*') {
         NFA *a = nfa.top();
         nfa.pop();
-        a = NFA_star(a, type);
-        nfa.push(a);
+        nfa.push(NFA_star(a, type));
     } else if (t == '+') {
         NFA *a = nfa.top();
         nfa.pop();
-        a = NFA_plus(a);
-        nfa.push(a);
+        nfa.push(NFA_plus(a, type));
     } else if (t == '|') {
         NFA *a = nfa.top();
         nfa.pop();
         NFA *b = nfa.top();
         nfa.pop();
-        nfa.push(NFA_or(a, b, type));
+        nfa.push(NFA_or(b, a, type));
     } else if (t == '@') {
         NFA *a = nfa.top();
         nfa.pop();
         NFA *b = nfa.top();
         nfa.pop();
-        nfa.push(NFA_concatenate(b, a));
+        nfa.push(NFA_concatenate(b, a, type));
     } else {
         cout << "error no valid NFA operation";
     }
@@ -84,8 +88,7 @@ NFA *NFA::evaluate_expression(string s, int type) {
     stack<char> operations;
     for (int i = 0; i < s.size(); i++) {
         if (s[i] == '\\') {
-            NFA *aux = new NFA(new Node(nodes, type), new Node(nodes + 1, type));
-            nodes += 2;
+            NFA *aux = new NFA(new Node(type), new Node(type));
             if(s[i+1] != 'L') {
                 aux->start->adjacent[s[i + 1]].push_back(aux->end);
             } else {
@@ -128,8 +131,7 @@ NFA *NFA::evaluate_expression(string s, int type) {
         } else if (s[i] == '*' || s[i] == '+') {
             operation(nfa, s[i], type);
         } else {
-            NFA *aux = new NFA(new Node(nodes, type), new Node(nodes + 1, type));
-            nodes += 2;
+            NFA *aux = new NFA(new Node(type), new Node(type));
             aux->start->adjacent[s[i]].push_back(aux->end);
             aux->end->isAccepting = true;
             nfa.push(aux);

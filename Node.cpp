@@ -4,8 +4,10 @@
 
 #include "Node.h"
 
-Node::Node(int id, int type) {
-    this->id = id;
+int nodes = 0;
+
+Node::Node(int type) {
+    this->id = nodes++;
     this->type = type;
     this->isAccepting = false;
 }

@@ -15,9 +15,9 @@ public:
     Node* start = NULL;
     Node* end = NULL;
     NFA* NFA_or(NFA*, NFA*, int );
-    NFA* NFA_concatenate(NFA*, NFA*);
+    NFA* NFA_concatenate(NFA*, NFA*, int);
     NFA* NFA_star(NFA*, int);
-    NFA* NFA_plus(NFA*);
+    NFA* NFA_plus(NFA*, int);
     void operation(stack<NFA*> &, char, int);
     NFA* evaluate_expression(string, int);
 private:
