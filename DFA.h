@@ -4,6 +4,7 @@
 
 #include <bits/stdc++.h>
 #include "Node.h"
+#include "NFA.h"
 #ifndef COMPILER_DFA_H
 #define COMPILER_DFA_H
 
@@ -17,6 +18,8 @@ public:
     int type;
     unordered_map<char, DFA*> adjacent;
     bool isAccepting;
+    static void epsilon_closure(Node*, set<int> &, vector<Node*> &, bool &, int &);
+    static DFA* convert_NFA_to_DFA(NFA*);
 private:
 
 
