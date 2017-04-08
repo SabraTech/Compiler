@@ -122,6 +122,8 @@ int main() {
 
     // maps between expression_num and the corresponding label
     map<int, string> mp;
+    
+    //Add extra parameter for merging to keep original NFAs has an accepting state
     for (auto x : exp_map) {
         cout << x.second << endl;
         mp[expression_num] = x.first;
