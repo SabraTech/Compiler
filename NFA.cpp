@@ -13,6 +13,13 @@ NFA::NFA(Node *start, Node *end) {
     this->end = end;
 }
 
+NFA *NFA::NFA_or_final(NFA *a, NFA *b, int type) {
+    NFA *result = new NFA(new Node(type), nullptr);
+    result->start->adjacent['\0'].push_back(a->start);
+    result->start->adjacent['\0'].push_back(b->start);
+    return result;
+}
+
 NFA *NFA::NFA_or(NFA *a, NFA *b, int type) {
     NFA *result = new NFA(new Node(type), new Node(type));
     result->start->adjacent['\0'].push_back(a->start);

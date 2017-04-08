@@ -18,7 +18,7 @@ vector<string> keywords, punctuations;
 map<string, string> exp_map;
 
 int main() {
-    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
+    ifstream myFile("/home/sherif/git/Compiler/Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -122,7 +122,7 @@ int main() {
 
     // maps between expression_num and the corresponding label
     map<int, string> mp;
-    
+
     //Add extra parameter for merging to keep original NFAs has an accepting state
     for (auto x : exp_map) {
         cout << x.second << endl;
@@ -132,20 +132,20 @@ int main() {
         if (final_nfa == NULL) {
             final_nfa = aux;
         } else {
-            final_nfa = dummy->NFA_or(final_nfa, aux, 20);
+            final_nfa = dummy->NFA_or_final(final_nfa, aux, 20);
         }
     }
 
     for (auto x : punctuations) {
         NFA *aux = dummy->evaluate_expression(x, 1);
-        final_nfa = dummy->NFA_or(final_nfa, aux, 20);
+        final_nfa = dummy->NFA_or_final(final_nfa, aux, 20);
     }
     for (auto x : keywords) {
         if (x[0] == '\0') {
             continue;
         }
         NFA *aux = dummy->evaluate_expression(x, 0);
-        final_nfa = dummy->NFA_or(final_nfa, aux, 20);
+        final_nfa = dummy->NFA_or_final(final_nfa, aux, 20);
     }
 
     // transfer NFA to DFA
@@ -175,7 +175,7 @@ int main() {
             cout << mp[t];
         }
     }*/
-    string in = "while";
+    string in = "in";
     int t = DFA::match_dfa(dfa_not_minimized, in);
     if (t == 0 || t == 1) {
         cout << in;

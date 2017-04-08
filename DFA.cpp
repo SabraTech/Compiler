@@ -19,7 +19,7 @@ void DFA::epsilon_closure(Node *node, set<int> &vis, vector<Node *> &inner_nodes
     vis.insert(node->id);
     inner_nodes.push_back(node);
     isAccepting |= node->isAccepting;
-    type = min(type, node->type);
+    if(node->isAccepting)type = min(type, node->type);
     for (int i = 0; i < node->adjacent['\0'].size(); i++) {
         DFA::epsilon_closure(node->adjacent['\0'][i], vis, inner_nodes, isAccepting, type);
     }

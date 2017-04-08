@@ -29,6 +29,8 @@ public:
 
     NFA *evaluate_expression(string, int);
 
+    NFA *NFA_or_final(NFA *, NFA *, int);
+
 private:
 
 
