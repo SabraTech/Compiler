@@ -28,9 +28,7 @@ int main() {
         cout << "Can not open the file" << endl;
     }
     myFile.close();
-    for(string s : lexical_rules){
-        cout << s << endl;
-    }
+
     /*lexical_rules = {"letter = a-z | A-Z",
                      "digit = 0-9",
                      "id: letter (letter | digit)*",

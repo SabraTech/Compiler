@@ -57,6 +57,7 @@ void Utilities::add_concatenation_keywords(vector<string> &keywords) {
 
 int Utilities::strstr(string haystack, string needle) {
     int f[needle.size()];
+    f[0] = 0;
     for (int i = 1, k = 0; i < needle.size(); i++) {
         while (k > 0 && needle[i] != needle[k])
             k = f[k - 1];
