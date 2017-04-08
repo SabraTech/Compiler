@@ -18,7 +18,7 @@ vector<string> keywords, punctuations;
 map<string, string> exp_map;
 
 int main() {
-    ifstream myFile("/home/sherif/git/Compiler/Rules.txt");
+    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -29,20 +29,6 @@ int main() {
     }
     myFile.close();
 
-    /*lexical_rules = {"letter = a-z | A-Z",
-                     "digit = 0-9",
-                     "id: letter (letter | digit)*",
-                     "digits = digit+",
-                     "{boolean int float}",
-                     "num: digit+ | digit+ . digits ( \\L | E digits)",
-                     "relop: \\=\\= | !\\= | > | >\\= | < | <\\=",
-                     "assign: =",
-                     "{ if else while }",
-                     "[; , \\( \\) { }]",
-                     "addop: \\+ | -",
-                     "mulop: \\* | /"
-
-    };*/
     // parse
     def_map = Parser::parse_out_definitions(lexical_rules);
     exp_map = Parser::parse_out_expressions(lexical_rules);
@@ -101,19 +87,6 @@ int main() {
     Utilities::add_concatenation_def(def_map);
     Utilities::add_concatenation_expression(exp_map);
     Utilities::add_concatenation_keywords(keywords);
-
-    // print to test here
-    /*cout << "def map" << endl;
-    for (auto const& x : def_map)
-    {
-        cout << x.first << " : " << x.second << endl ;
-    }
-
-    cout << "exp map" << endl;
-    for (auto const& x : exp_map)
-    {
-        cout << x.first << " : " << x.second << endl ;
-    }*/
 
     //Testing evaluating expression
     NFA *final_nfa = NULL;
@@ -175,6 +148,21 @@ int main() {
             cout << mp[t];
         }
     }*/
+
+    // reading the code file
+    vector<string> code;
+    ifstream myCode("/home/sabra/ClionProjects/Compiler/Code.txt");
+    string lineOfCode;
+    if(myCode.is_open()){
+        while(getline(myCode,lineOfCode)){
+            lineOfCode = Parser::trim(lineOfCode);
+            code.push_back(lineOfCode);
+        }
+    }else{
+        cout << "Can not open the file" << endl;
+    }
+    myCode.close();
+
     string in = "in";
     int t = DFA::match_dfa(dfa_not_minimized, in);
     if (t == 0 || t == 1) {
