@@ -25,7 +25,7 @@ public:
 
     static DFA *convert_NFA_to_DFA(NFA *);
 
-    static int match_dfa(DFA *, string);
+    static vector<string> match_dfa(DFA *, vector<string>, map<int,string>);
 
     static void printDFA(DFA *);
 

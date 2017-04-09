@@ -18,7 +18,7 @@ vector<string> keywords, punctuations;
 map<string, string> exp_map;
 
 int main() {
-    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
+    ifstream myFile("/home/sherif/git/Compiler/Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -151,7 +151,7 @@ int main() {
 
     // reading the code file
     vector<string> code;
-    ifstream myCode("/home/sabra/ClionProjects/Compiler/Code.txt");
+    ifstream myCode("/home/sherif/git/Compiler/Code.txt");
     string lineOfCode;
     if(myCode.is_open()){
         while(getline(myCode,lineOfCode)){
@@ -163,12 +163,9 @@ int main() {
     }
     myCode.close();
 
-    string in = "in";
-    int t = DFA::match_dfa(dfa_not_minimized, in);
-    if (t == 0 || t == 1) {
-        cout << in;
-    } else {
-        cout << mp[t];
+    vector<string> matches = DFA::match_dfa(dfa_not_minimized, code, mp);
+    for(auto x : matches) {
+        cout << x << endl;
     }
     return 0;
 }

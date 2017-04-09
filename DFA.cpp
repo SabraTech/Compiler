@@ -83,18 +83,91 @@ DFA *DFA::convert_NFA_to_DFA(NFA *nfa) {
     return start_dfa;
 }
 
-int DFA::match_dfa(DFA *dfa, string input) {
-    for (int i = 0; i < input.size(); i++) {
-        if (dfa->adjacent.find(input[i]) != dfa->adjacent.end()) {
-            dfa = dfa->adjacent[input[i]];
-        } else {
-            cout << "Error in DFA::match_dfa\n";
+vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp) {
+    vector<string> matches;
+    DFA *start = dfa;
+    for(auto in: input) {
+        int last_match = -1;
+        int type = 20;
+        int last_idx = 0;
+        int i = 0;
+        dfa = start;
+        while(i < in.size()) {
+            if(in[i] == ' ' || in[i] == '\t') {
+                if(last_match == -1) {
+                    matches.push_back("no match possible");
+                    return matches;
+                } else if(last_match == i-1) {
+                    if(type <= 1) {
+                        matches.push_back(in.substr(last_idx, i-last_idx));
+                    } else{
+                        matches.push_back(mp[type]);
+                    }
+                    while(i < in.size() && (in[i] == ' ' || in[i] == '\t')) {
+                            i++;
+                    }
+                    last_idx = i;
+                    last_match = -1;
+                    type = 20;
+                    dfa = start;
+                } else {
+                    if(type <= 1) {
+                        matches.push_back(in.substr(last_idx, last_match-last_idx+1));
+                    } else{
+                        matches.push_back(mp[type]);
+                    }
+                    last_idx = last_match+1;
+                    last_match = -1;
+                    i = last_idx;
+                    type = 20;
+                    dfa = start;
+                }
+            } else {
+                if(dfa->adjacent.find(in[i]) == dfa->adjacent.end()) {
+                    if(last_match == -1) {
+                        matches.push_back("no match possible");
+                        return matches;
+                    } else {
+                        if(type <= 1) {
+                            matches.push_back(in.substr(last_idx, last_match-last_idx+1));
+                        } else {
+                            matches.push_back(mp[type]);
+                        }
+                        last_idx = last_match+1;
+                        i = last_idx;
+                        last_match = -1;
+                        dfa = start;
+                        type = 20;
+                    }
+                } else {
+                    dfa = dfa->adjacent[in[i]];
+                    if(dfa->isAccepting) {
+                        type = dfa->type;
+                        last_match = i;
+                    }
+                    i++;
+                }
+            }
+            if(i == in.size()) {
+                if(last_match == -1 && last_idx < in.size()) {
+                    matches.push_back("no match possible");
+                    return matches;
+                } else {
+                    if(type <= 1) {
+                            matches.push_back(in.substr(last_idx, last_match-last_idx+1));
+                    } else {
+                        matches.push_back(mp[type]);
+                    }
+                    last_idx = last_match+1;
+                    i = last_idx;
+                    last_match = -1;
+                    dfa = start;
+                    type = 20;
+                }
+            }
         }
     }
-    if (dfa->isAccepting) {
-        return dfa->type;
-    }
-    return -1;
+    return matches;
 }
 
 void DFA::printDFA(DFA *dfa) {
