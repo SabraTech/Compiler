@@ -168,12 +168,14 @@ int main() {
     myCode.close();
 
     //to print matches
+    freopen("token.txt", "w", stdout);
     vector<string> matches = DFA::match_dfa(minimized, code, mp);
     for(auto x : matches) {
         cout << x << endl;
     }
 
     //to print dfa
+    freopen("transition.txt", "w", stdout);
     DFA::printDFA(minimized, useless->id);
     return 0;
 }

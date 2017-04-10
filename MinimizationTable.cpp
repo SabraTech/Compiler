@@ -93,7 +93,6 @@ DFA* MinimizationTable::minimize_DFA(DFA* dfa) {
         if(total == g)break;
         g = total;
     }
-    cout << g << endl;
     vector<vector<int>> v(g);
     for(auto x : mp) {
         v[group[x.first]].push_back(x.first);
@@ -114,7 +113,6 @@ DFA* MinimizationTable::minimize_DFA(DFA* dfa) {
                 visited_dfa[i]->adjacent[x.first] = visited_dfa[group[x.second]];
             }
         }
-        if(visited_dfa[i]->type == 0)cout << i << " " << visited_dfa[i]->type << " " << visited_dfa[i]->isAccepting << endl;
     }
     return visited_dfa[hamada[make_pair(20,0)]];
 }

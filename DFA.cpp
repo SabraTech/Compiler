@@ -158,7 +158,6 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
                     } else {
                         matches.push_back(mp[type]);
                     }
-                    cout << dfa->type << " " << dfa->id << endl;
                     last_idx = last_match+1;
                     i = last_idx;
                     last_match = -1;
