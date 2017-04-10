@@ -19,7 +19,7 @@ vector<string> keywords, punctuations;
 map<string, string> exp_map;
 
 int main() {
-    ifstream myFile("/home/sherif/git/Compiler/Rules.txt");
+    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -99,7 +99,7 @@ int main() {
 
     //Add extra parameter for merging to keep original NFAs has an accepting state
     for (auto x : exp_map) {
-        cout << x.second << endl;
+        // cout << x.second << endl;
         mp[expression_num] = x.first;
         NFA *aux = dummy->evaluate_expression(x.second, expression_num++);
         // cout << endl;
@@ -155,7 +155,7 @@ int main() {
     }*/
     // reading the code file
     vector<string> code;
-    ifstream myCode("/home/sherif/git/Compiler/Code.txt");
+    ifstream myCode("/home/sabra/ClionProjects/Compiler/Code.txt");
     string lineOfCode;
     if(myCode.is_open()){
         while(getline(myCode,lineOfCode)){
@@ -168,14 +168,22 @@ int main() {
     myCode.close();
 
     //to print matches
-    freopen("token.txt", "w", stdout);
+    ofstream tokenFile;
+    tokenFile.open("/home/sabra/ClionProjects/Compiler/Token.txt");
+    // freopen("/home/sabra/ClionProjects/Compiler/Token.txt", "w", stdout);
     vector<string> matches = DFA::match_dfa(minimized, code, mp);
     for(auto x : matches) {
-        cout << x << endl;
+        tokenFile << x << endl;
     }
+    tokenFile.close();
 
     //to print dfa
-    freopen("transition.txt", "w", stdout);
-    DFA::printDFA(minimized, useless->id);
+    ofstream transitionFile;
+    transitionFile.open("/home/sabra/ClionProjects/Compiler/Transition.txt");
+    // freopen("/home/sabra/ClionProjects/Compiler/Transition.txt", "w", stdout);
+    DFA::printDFA(minimized, useless->id, transitionFile);
+    transitionFile.close();
+
+    cout << "The Token.txt and Transition.txt Files Generated" << endl;
     return 0;
 }
