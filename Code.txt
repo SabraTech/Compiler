@@ -1,5 +1,5 @@
 int sum , count , pass ,
-mnt; while (pass != 10)
+mnt; while (pass != 10.55E100)
 {
     pass = pass + 1 ;
 }

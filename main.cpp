@@ -8,6 +8,7 @@
 #include "NFA.h"
 #include "DFA.h"
 #include "Utilities.h"
+#include "MinimizationTable.h"
 
 using namespace std;
 
@@ -125,7 +126,11 @@ int main() {
 
     DFA *dfa_not_minimized = DFA::convert_NFA_to_DFA(final_nfa);
 
-    //printDFA(dfa_not_minimized);
+    DFA* useless = new DFA();
+
+    DFA* minimized = MinimizationTable::minimize_DFA(dfa_not_minimized);
+
+    //DFA::printDFA(dfa_not_minimized);
     // minimize DFA
     // enter code
 
@@ -148,7 +153,6 @@ int main() {
             cout << mp[t];
         }
     }*/
-
     // reading the code file
     vector<string> code;
     ifstream myCode("/home/sherif/git/Compiler/Code.txt");
@@ -163,9 +167,13 @@ int main() {
     }
     myCode.close();
 
-    vector<string> matches = DFA::match_dfa(dfa_not_minimized, code, mp);
+    //to print matches
+    vector<string> matches = DFA::match_dfa(minimized, code, mp);
     for(auto x : matches) {
         cout << x << endl;
     }
+
+    //to print dfa
+    DFA::printDFA(minimized, useless->id);
     return 0;
 }

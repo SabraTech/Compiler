@@ -96,7 +96,7 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
             if(in[i] == ' ' || in[i] == '\t') {
                 if(last_match == -1) {
                     matches.push_back("no match possible");
-                    return matches;
+                    break;
                 } else if(last_match == i-1) {
                     if(type <= 1) {
                         matches.push_back(in.substr(last_idx, i-last_idx));
@@ -126,7 +126,7 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
                 if(dfa->adjacent.find(in[i]) == dfa->adjacent.end()) {
                     if(last_match == -1) {
                         matches.push_back("no match possible");
-                        return matches;
+                        break;
                     } else {
                         if(type <= 1) {
                             matches.push_back(in.substr(last_idx, last_match-last_idx+1));
@@ -151,13 +151,14 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
             if(i == in.size()) {
                 if(last_match == -1 && last_idx < in.size()) {
                     matches.push_back("no match possible");
-                    return matches;
+                    break;
                 } else {
                     if(type <= 1) {
                             matches.push_back(in.substr(last_idx, last_match-last_idx+1));
                     } else {
                         matches.push_back(mp[type]);
                     }
+                    cout << dfa->type << " " << dfa->id << endl;
                     last_idx = last_match+1;
                     i = last_idx;
                     last_match = -1;
@@ -170,26 +171,27 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
     return matches;
 }
 
-void DFA::printDFA(DFA *dfa) {
+void DFA::printDFA(DFA *dfa, int extra) {
     stack<DFA *> s;
     s.push(dfa);
     set<int> vis;
-    ///if you want to print it in a file enter file_name in freopen(file_name, "w", stdout);
-    int aaaaaa = 0;
-    vector<char> hamada;
+    vector<int> accepting_nodes;
+    cout << "Edges in form: from to edge_char\n";
     while (!s.empty()) {
         DFA *aux = s.top();
         s.pop();
         if (vis.find(aux->id) != vis.end())continue;
         vis.insert(aux->id);
+        if(aux->isAccepting) {
+            accepting_nodes.push_back(aux->id);
+        }
         for (auto x : aux->adjacent) {
-            if (aux->id == x.second->id)aaaaaa++, hamada.push_back(x.first);
-            cout << aux->id << " " << x.second->id << " " << x.first << endl;
+            cout << aux->id - extra << " " << x.second->id - extra << " " << x.first << endl;
             s.push(x.second);
         }
     }
-    cout << aaaaaa << endl;
-    for (auto x : hamada) {
+    cout << "Accepting Nodes:\n";
+    for(auto x: accepting_nodes) {
         cout << x << endl;
     }
 }
