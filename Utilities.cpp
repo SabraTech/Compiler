@@ -88,3 +88,36 @@ string Utilities::remove_spaces(string s) {
     s_without_space += s.substr(pos);
     return s_without_space;
 }
+
+vector<string> Utilities::split(char *line, char *delimeter){
+    char *temp = strtok(line,delimeter) ;
+    vector<string> result;
+    while (temp != NULL){//spliting the paths into string[]
+        // debuging : printf("%s\n",temp);
+        result.push_back(temp);
+        temp = strtok (NULL, delimeter);
+    }
+    return result;
+}
+
+unordered_set<string> Utilities::add_sets(unordered_set<string> in, unordered_set<string> added) {
+       for(auto str : added){
+           in.insert(str);
+       }
+       return in;
+}
+
+string Utilities::add_redundant_spaces(string str){
+    bool comma = false;
+    for(int i = 0 ; i < str.length() ; i++){
+        if(str[i] == '\''){
+            if(!comma){
+                comma = true;
+            }else{
+                str = str.insert(i+1," ");
+                comma = false;
+            }
+        }
+    }
+    return str;
+}

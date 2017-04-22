@@ -24,6 +24,12 @@ public:
 
     static string remove_spaces(string);
 
+    static vector<string> split(char *, char *);
+
+    static unordered_set<string> add_sets(unordered_set<string>, unordered_set<string>);
+
+    static string add_redundant_spaces(string);
+
 };
 
 #endif //COMPILER_UTILITIES_H

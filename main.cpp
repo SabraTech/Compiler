@@ -43,3 +43,24 @@ int main() {
 
     return 0;
 }
+
+/**
+vector<string> cfg;
+
+int main() {
+    ifstream cfgFile("/home/sabra/ClionProjects/Compiler/CFG.txt");
+    string line;
+    if(cfgFile.is_open()) {
+        while(getline(cfgFile,line)) {
+            cfg.push_back(line);
+        }
+    }else{
+        cout << "Can not open the file" << endl;
+    }
+    cfgFile.close();
+    Phase2 *phase2 = new Phase2(cfg);
+
+    Phase2::startPhase2();
+}
+
+*/
