@@ -195,12 +195,13 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
  * @param dfa
  * @param extra
  * @param transitionFile
+ * @param mp
  */
-void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile) {
+void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile, map<int, string> mp) {
     stack<DFA *> s;
     s.push(dfa);
     set<int> vis;
-    vector<int> accepting_nodes;
+    vector<DFA *> accepting_nodes;
     transitionFile << "Edges in form: from to edge_char\n" << endl;
     transitionFile << "From Node No. - To Node No. - Char on the Edge" << endl;
     transitionFile << "================================================" << endl;
@@ -211,7 +212,7 @@ void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile) {
         if (vis.find(aux->id) != vis.end())continue;
         vis.insert(aux->id);
         if(aux->isAccepting) {
-            accepting_nodes.push_back(aux->id);
+            accepting_nodes.push_back(aux);
         }
         for (auto x : aux->adjacent) {
             transitionFile << row++ << ": " << aux->id - extra << " - " << x.second->id - extra << " - " << x.first
@@ -224,6 +225,6 @@ void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile) {
     transitionFile << "================" << endl;
     transitionFile << "Node No." << endl;
     for(auto x: accepting_nodes) {
-        transitionFile << x << endl;
+        transitionFile << x->id - extra << " " << mp[x->type] << endl;
     }
 }

@@ -120,6 +120,9 @@ void Phase1::startPhase1() {
 
     minimized = MinimizationTable::minimize_DFA(dfa_not_minimized);
 
+    mp[0] = "Keyword";
+    mp[1] = "Punctuation";
+
 }
 
 /*!
@@ -141,7 +144,7 @@ void Phase1::finishPhase1(vector<string> &code) {
     ofstream transitionFile;
     transitionFile.open("Transition.txt");
     // freopen("/home/sabra/ClionProjects/Compiler/Transition.txt", "w", stdout);
-    DFA::printDFA(minimized, useless->id, transitionFile);
+    DFA::printDFA(minimized, useless->id, transitionFile, mp);
     transitionFile.close();
 
     cout << "The Token.txt and Transition.txt Files Generated" << endl;

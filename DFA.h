@@ -26,7 +26,7 @@ public:
 
     static vector<string> match_dfa(DFA *, vector<string>, map<int,string>);
 
-    static void printDFA(DFA *, int, ofstream &);
+    static void printDFA(DFA *, int, ofstream &, map<int, string>);
 
 private:
 
