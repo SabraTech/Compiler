@@ -10,7 +10,6 @@
 #define COMPILER_DFA_H
 
 using namespace std;
-
 class DFA {
 public:
     DFA();

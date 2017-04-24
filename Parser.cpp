@@ -7,21 +7,41 @@
 
 using namespace std;
 
+/*!
+ *
+ * @param s
+ * @return
+ */
 inline string Parser::left_trim(string &s) {
     s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
     return s;
 }
 
+/*!
+ *
+ * @param s
+ * @return
+ */
 inline string Parser::right_trim(string &s) {
     s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
     return s;
 }
 
+/*!
+ *
+ * @param s
+ * @return
+ */
 inline string Parser::trim(string &s) {
     string x = right_trim(s);
     return left_trim(x);
 }
 
+/*!
+ *
+ * @param RHS
+ * @return
+ */
 inline string Parser::extract(string RHS) {
     string RHS_without_space;
     size_t pos = 0, found;
@@ -45,6 +65,11 @@ inline string Parser::extract(string RHS) {
     return "(" + RHS_with_or + ")";
 }
 
+/*!
+ *
+ * @param rules
+ * @return
+ */
 map<string, string> Parser::parse_out_definitions(vector<string> &rules) {
     map<string, string> data;
     for (int i = 0; i < rules.size(); i++) {
@@ -64,6 +89,11 @@ map<string, string> Parser::parse_out_definitions(vector<string> &rules) {
     return data;
 }
 
+/*!
+ *
+ * @param rules
+ * @return
+ */
 map<string, string> Parser::parse_out_expressions(vector<string> &rules) {
     map<string, string> data;
     for (int i = 0; i < rules.size(); i++) {
@@ -81,6 +111,11 @@ map<string, string> Parser::parse_out_expressions(vector<string> &rules) {
     return data;
 }
 
+/*!
+ *
+ * @param rules
+ * @return
+ */
 vector<string> Parser::parse_out_keywords(vector<string> &rules) {
     vector<string> keywords;
     for (int i = 0; i < rules.size(); i++) {
@@ -101,6 +136,11 @@ vector<string> Parser::parse_out_keywords(vector<string> &rules) {
     return keywords;
 }
 
+/*!
+ *
+ * @param rules
+ * @return
+ */
 vector<string> Parser::parse_out_punctuations(vector<string> &rules) {
     vector<string> punctuations;
     for (int i = 0; i < rules.size(); i++) {

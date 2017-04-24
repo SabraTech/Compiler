@@ -6,7 +6,13 @@
 #include "Utilities.h"
 #include "ParsingTable.h"
 
-
+/*!
+ *
+ * @param first_sets
+ * @param follow_sets
+ * @param productions
+ * @return
+ */
 ParsingTable::ParsingTable(unordered_map<string, unordered_set<string>> &first_sets,
                            unordered_map<string, unordered_set<string>> &follow_sets,
                            unordered_map<string, vector<vector<string>>> &productions) {

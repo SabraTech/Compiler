@@ -7,6 +7,11 @@
 
 using namespace std;
 
+/*!
+ *
+ * @param a
+ * @return
+ */
 string Utilities::add_concatenation_to_string(string a) {
     string ans;
     ans = +a[0];
@@ -33,6 +38,10 @@ string Utilities::add_concatenation_to_string(string a) {
     return ans;
 }
 
+/*!
+ *
+ * @param def_map
+ */
 void Utilities::add_concatenation_def(map<string, string> &def_map) {
     map<string, string> substituted;
     for (auto const &x : def_map) {
@@ -41,6 +50,10 @@ void Utilities::add_concatenation_def(map<string, string> &def_map) {
     def_map = substituted;
 }
 
+/*!
+ *
+ * @param exp_map
+ */
 void Utilities::add_concatenation_expression(map<string, string> &exp_map) {
     map<string, string> substituted;
     for (auto const &x : exp_map) {
@@ -49,12 +62,22 @@ void Utilities::add_concatenation_expression(map<string, string> &exp_map) {
     exp_map = substituted;
 }
 
+/*!
+ *
+ * @param keywords
+ */
 void Utilities::add_concatenation_keywords(vector<string> &keywords) {
     for (int i = 0; i < keywords.size(); i++) {
         keywords[i] = Utilities::add_concatenation_to_string(Utilities::remove_spaces(keywords[i]));
     }
 }
 
+/*!
+ *
+ * @param haystack
+ * @param needle
+ * @return
+ */
 int Utilities::strstr(string haystack, string needle) {
     int f[needle.size()];
     f[0] = 0;
@@ -78,6 +101,11 @@ int Utilities::strstr(string haystack, string needle) {
     return -1;
 }
 
+/*!
+ *
+ * @param s
+ * @return
+ */
 string Utilities::remove_spaces(string s) {
     string s_without_space;
     size_t pos = 0, found;
@@ -89,6 +117,12 @@ string Utilities::remove_spaces(string s) {
     return s_without_space;
 }
 
+/*!
+ *
+ * @param line
+ * @param delimeter
+ * @return
+ */
 vector<string> Utilities::split(char *line, char *delimeter) {
     char *temp = strtok(line, delimeter);
     vector<string> result;
@@ -100,6 +134,12 @@ vector<string> Utilities::split(char *line, char *delimeter) {
     return result;
 }
 
+/*!
+ *
+ * @param in
+ * @param added
+ * @return
+ */
 unordered_set<string> Utilities::add_sets(unordered_set<string> in, unordered_set<string> added) {
     for (auto str : added) {
         in.insert(str);
@@ -107,6 +147,11 @@ unordered_set<string> Utilities::add_sets(unordered_set<string> in, unordered_se
     return in;
 }
 
+/*!
+ *
+ * @param str
+ * @return
+ */
 string Utilities::add_redundant_spaces(string str) {
     bool comma = false;
     for (int i = 0; i < str.length(); i++) {
@@ -122,6 +167,12 @@ string Utilities::add_redundant_spaces(string str) {
     return str;
 }
 
+/*!
+ *
+ * @param in
+ * @param added
+ * @return
+ */
 unordered_set<string> Utilities::add_sets_except_epsilon(
         unordered_set<string> in, unordered_set<string> added) {
     for (auto str : added) {

@@ -2,6 +2,11 @@
 
 using namespace std;
 
+/*!
+ *
+ * @param dfa
+ * @return
+ */
 DFA* MinimizationTable::minimize_DFA(DFA* dfa) {
     map<int, map<char,int>>mp;
     map<int, int>type;

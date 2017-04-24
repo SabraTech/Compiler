@@ -99,7 +99,11 @@ void Phase2::get_first_sets() {
     }
 }
 
-
+/*!
+ *
+ * @param non_terminal
+ * @return
+ */
 unordered_set<string> Phase2::get_first_sets(string non_terminal) {
     if (visited.find(non_terminal) != visited.end()) {
         return first[non_terminal];

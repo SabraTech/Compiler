@@ -3,8 +3,6 @@
 //
 
 #include "NFA.h"
-#include "Node.h"
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -13,6 +11,13 @@ NFA::NFA(Node *start, Node *end) {
     this->end = end;
 }
 
+/*!
+ *
+ * @param a
+ * @param b
+ * @param type
+ * @return
+ */
 NFA *NFA::NFA_or_final(NFA *a, NFA *b, int type) {
     NFA *result = new NFA(new Node(type), nullptr);
     result->start->adjacent['\0'].push_back(a->start);
@@ -20,6 +25,13 @@ NFA *NFA::NFA_or_final(NFA *a, NFA *b, int type) {
     return result;
 }
 
+/*!
+ *
+ * @param a
+ * @param b
+ * @param type
+ * @return
+ */
 NFA *NFA::NFA_or(NFA *a, NFA *b, int type) {
     NFA *result = new NFA(new Node(type), new Node(type));
     result->start->adjacent['\0'].push_back(a->start);
@@ -32,6 +44,13 @@ NFA *NFA::NFA_or(NFA *a, NFA *b, int type) {
     return result;
 }
 
+/*!
+ *
+ * @param a
+ * @param b
+ * @param type
+ * @return
+ */
 NFA *NFA::NFA_concatenate(NFA *a, NFA *b, int type) {
     NFA *result = new NFA(new Node(type), new Node(type));
     result->start->adjacent['\0'].push_back(a->start);
@@ -43,6 +62,12 @@ NFA *NFA::NFA_concatenate(NFA *a, NFA *b, int type) {
     return result;
 }
 
+/*!
+ *
+ * @param a
+ * @param type
+ * @return
+ */
 NFA *NFA::NFA_star(NFA *a, int type) {
     NFA *result = new NFA(new Node(type), new Node(type));
     a->end->isAccepting = false;
@@ -54,6 +79,12 @@ NFA *NFA::NFA_star(NFA *a, int type) {
     return result;
 }
 
+/*!
+ *
+ * @param a
+ * @param type
+ * @return
+ */
 NFA *NFA::NFA_plus(NFA *a, int type) {
     NFA *result = new NFA(new Node(type), new Node(type));
     a->end->isAccepting = false;
@@ -64,6 +95,12 @@ NFA *NFA::NFA_plus(NFA *a, int type) {
     return result;
 }
 
+/*!
+ *
+ * @param nfa
+ * @param t
+ * @param type
+ */
 void NFA::operation(stack<NFA *> &nfa, char t, int type) {
     if (t == '*') {
         NFA *a = nfa.top();
@@ -90,6 +127,12 @@ void NFA::operation(stack<NFA *> &nfa, char t, int type) {
     }
 }
 
+/*!
+ *
+ * @param s
+ * @param type
+ * @return
+ */
 NFA *NFA::evaluate_expression(string s, int type) {
     stack<NFA *> nfa;
     stack<char> operations;

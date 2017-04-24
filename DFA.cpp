@@ -12,6 +12,14 @@ DFA::DFA() {
     this->type = 20;
 }
 
+/*!
+ *
+ * @param node
+ * @param vis
+ * @param inner_nodes
+ * @param isAccepting
+ * @param type
+ */
 void DFA::epsilon_closure(Node *node, set<int> &vis, vector<Node *> &inner_nodes, bool &isAccepting, int &type) {
     if (vis.find(node->id) != vis.end()) {
         return;
@@ -25,6 +33,11 @@ void DFA::epsilon_closure(Node *node, set<int> &vis, vector<Node *> &inner_nodes
     }
 }
 
+/*!
+ *
+ * @param nfa
+ * @return
+ */
 DFA *DFA::convert_NFA_to_DFA(NFA *nfa) {
     map<set<int>, DFA *> visited_dfa;
     set<int> vis;
@@ -83,6 +96,13 @@ DFA *DFA::convert_NFA_to_DFA(NFA *nfa) {
     return start_dfa;
 }
 
+/*!
+ *
+ * @param dfa
+ * @param input
+ * @param mp
+ * @return
+ */
 vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp) {
     vector<string> matches;
     DFA *start = dfa;
@@ -170,6 +190,12 @@ vector<string> DFA::match_dfa(DFA *dfa, vector<string> input, map<int,string> mp
     return matches;
 }
 
+/*!
+ *
+ * @param dfa
+ * @param extra
+ * @param transitionFile
+ */
 void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile) {
     stack<DFA *> s;
     s.push(dfa);
@@ -201,4 +227,3 @@ void DFA::printDFA(DFA *dfa, int extra, ofstream &transitionFile) {
         transitionFile << x << endl;
     }
 }
-

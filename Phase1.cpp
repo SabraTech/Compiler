@@ -122,6 +122,10 @@ void Phase1::startPhase1() {
 
 }
 
+/*!
+ *
+ * @param code
+ */
 void Phase1::finishPhase1(vector<string> &code) {
 
     // to print matches
