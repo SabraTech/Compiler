@@ -4,6 +4,7 @@
 
 #ifndef COMPILER_PARSINGTABLE_H
 #define COMPILER_PARSINGTABLE_H
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -11,9 +12,9 @@ using namespace std;
 class ParsingTable {
 public:
 
-    ParsingTable(unordered_map<string, unordered_set<string>>  &
-            ,unordered_map<string, unordered_set<string>>  &
-            ,unordered_map<string, vector<vector<string>>> &);
+    ParsingTable(unordered_map<string, unordered_set<string>> &, unordered_map<string, unordered_set<string>> &,
+                 unordered_map<string, vector<vector<string>>> &);
+
     void build_the_table(void);
 
 private:
@@ -22,9 +23,13 @@ private:
     unordered_map<string, unordered_set<string>> first_sets;
     unordered_map<string, unordered_set<string>> follow_sets;
     unordered_map<string, vector<vector<string>>> productions;
+
     void build_step1(void);
+
     void build_step2(void);
-    void print_parsing_table(void) ;
+
+    void print_parsing_table(void);
 
 };
+
 #endif //COMPILER_PARSINGTABLE_H

@@ -61,10 +61,10 @@ void ParsingTable::build_step2(void) {
 
 
 void ParsingTable::print_parsing_table(void) {
-    for(auto entry : table) {
+    for (auto entry : table) {
         cout << "NonTerminal: " << entry.first.first << ", Terminal: " << entry.first.second;
         cout << "  Productions: ";
-        for(int i = 0; i < entry.second.size(); i++) {
+        for (int i = 0; i < entry.second.size(); i++) {
             cout << " " << entry.second[i];
         }
         cout << endl;
