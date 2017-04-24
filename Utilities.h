@@ -30,6 +30,9 @@ public:
 
     static string add_redundant_spaces(string);
 
-};
+    static unordered_set<string> add_sets_except_epsilon(
+            unordered_set<string> , unordered_set<string> ) ;
+
+    };
 
 #endif //COMPILER_UTILITIES_H

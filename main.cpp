@@ -3,15 +3,15 @@
 //
 
 #include "bits/stdc++.h"
-#include "Parser.h"
 #include "Phase1.h"
+#include "Phase2.h"
 
 using namespace std;
-
+/*
 vector<string> rules;
 
 int main() {
-    ifstream myFile("/home/sabra/ClionProjects/Compiler/Rules.txt");
+    ifstream myFile("Rules.txt");
     string line;
     if(myFile.is_open()){
         while(getline(myFile,line)){
@@ -27,7 +27,7 @@ int main() {
 
     // reading the code file
     vector<string> code;
-    ifstream myCode("/home/sabra/ClionProjects/Compiler/Code.txt");
+    ifstream myCode("Code.txt");
     string lineOfCode;
     if(myCode.is_open()){
         while(getline(myCode,lineOfCode)){
@@ -44,11 +44,11 @@ int main() {
     return 0;
 }
 
-/**
-vector<string> cfg;
+*/
 
 int main() {
-    ifstream cfgFile("/home/sabra/ClionProjects/Compiler/CFG.txt");
+    vector<string> cfg;
+    ifstream cfgFile("Grammar.txt");
     string line;
     if(cfgFile.is_open()) {
         while(getline(cfgFile,line)) {
@@ -60,7 +60,7 @@ int main() {
     cfgFile.close();
     Phase2 *phase2 = new Phase2(cfg);
 
-    Phase2::startPhase2();
+    phase2->startPhase2();
 }
 
-*/
+

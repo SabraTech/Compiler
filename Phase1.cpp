@@ -126,7 +126,7 @@ void Phase1::finishPhase1(vector<string> &code) {
 
     // to print matches
     ofstream tokenFile;
-    tokenFile.open("/home/sabra/ClionProjects/Compiler/Token.txt");
+    tokenFile.open("Token.txt");
     vector<string> matches = DFA::match_dfa(minimized, code, mp);
     for (auto x : matches) {
         tokenFile << x << endl;
@@ -135,7 +135,7 @@ void Phase1::finishPhase1(vector<string> &code) {
 
     //to print dfa
     ofstream transitionFile;
-    transitionFile.open("/home/sabra/ClionProjects/Compiler/Transition.txt");
+    transitionFile.open("Transition.txt");
     // freopen("/home/sabra/ClionProjects/Compiler/Transition.txt", "w", stdout);
     DFA::printDFA(minimized, useless->id, transitionFile);
     transitionFile.close();
