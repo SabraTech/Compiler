@@ -7,7 +7,6 @@
 #include "Phase2.h"
 
 using namespace std;
-
 /*
 vector<string> rules;
 
@@ -51,11 +50,11 @@ int main() {
     vector<string> cfg;
     ifstream cfgFile("Grammar.txt");
     string line;
-    if (cfgFile.is_open()) {
-        while (getline(cfgFile, line)) {
+    if(cfgFile.is_open()) {
+        while(getline(cfgFile,line)) {
             cfg.push_back(line);
         }
-    } else {
+    }else{
         cout << "Can not open the file" << endl;
     }
     cfgFile.close();
