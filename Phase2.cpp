@@ -1,7 +1,7 @@
 #include "Phase2.h"
 #include "Parser.h"
 #include "Utilities.h"
-
+#include "ParsingTable.h"
 using namespace std;
 
 
@@ -15,9 +15,11 @@ void Phase2::startPhase2() {
     build_the_map();
     get_first_sets();
     // print_first_sets();
-
+    visited.clear();
     get_follow_sets();
-    print_follow_sets();
+   // print_follow_sets();
+    ParsingTable *table = new ParsingTable(first,follow,productions);
+    table->build_the_table();
 }
 
 void Phase2::initialize_cfg_list() {
@@ -140,27 +142,11 @@ void Phase2::get_follow_sets() {
     for (auto entry : productions) {
         get_follow_sets(entry.first);
     }
-    visited.clear();
     for (auto entry : follow_part_two) {
         get_follow_sets_part2(entry.first);
     }
 }
 
-
-unordered_set<string> Phase2::get_follow_sets_part2(string non_terminal) {
-    if (visited.find(non_terminal) != visited.end()) {
-        return follow[non_terminal];
-    }
-    visited.insert(non_terminal);
-    for (auto entry : follow_part_two) {
-        unordered_set<string> value = entry.second;
-        for (auto str : value) {
-            follow[str] = get_follow_sets_part2(str);
-            follow[entry.first] = Utilities::add_sets(follow[entry.first], follow[str]);
-        }
-    }
-    return follow[non_terminal];
-}
 
 void Phase2::get_follow_sets(string non_terminal) {
     for (auto entry : productions) {
@@ -183,6 +169,21 @@ void Phase2::get_follow_sets(string non_terminal) {
             }
         }
     }
+}
+
+unordered_set<string> Phase2::get_follow_sets_part2(string non_terminal) {
+    if (visited.find(non_terminal) != visited.end()) {
+        return follow[non_terminal];
+    }
+    visited.insert(non_terminal);
+    for (auto entry : follow_part_two) {
+        unordered_set<string> value = entry.second;
+        for (auto str : value) {
+            follow[str] = get_follow_sets_part2(str);
+            follow[entry.first] = Utilities::add_sets(follow[entry.first], follow[str]);
+        }
+    }
+    return follow[non_terminal];
 }
 
 void Phase2::print_follow_sets(void) {
