@@ -8,7 +8,7 @@ using namespace std;
 class Phase2 {
 public:
 
-    Phase2(vector<string> &);
+    Phase2(vector<string> &, vector<string> &);
     void startPhase2();
 
 private:
@@ -24,6 +24,7 @@ private:
 
     string start_symbol;
     vector<string> cfg_list;
+    vector<string> matches;
     unordered_set<string> terminals;
     unordered_map<string, unordered_set<string>> first;
     unordered_map<string, unordered_set<string>> follow;

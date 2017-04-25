@@ -30,6 +30,8 @@ public:
 
     static string add_redundant_spaces(string);
 
+    static vector<string> read_file(string);
+
     static unordered_set<string> add_sets_except_epsilon(
             unordered_set<string> , unordered_set<string> ) ;
 

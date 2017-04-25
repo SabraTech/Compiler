@@ -14,10 +14,5 @@ relop
 num
 )
 {
-id
-assign
-id
-addop
-num
-;
+no match possible
 }

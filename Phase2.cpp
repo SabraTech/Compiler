@@ -5,8 +5,9 @@
 using namespace std;
 
 
-Phase2::Phase2(vector<string> &input_file) {
+Phase2::Phase2(vector<string> &input_file, vector<string> &input_matches) {
     cfg_list = input_file;
+    matches = input_matches;
 }
 
 void Phase2::startPhase2() {
@@ -18,7 +19,7 @@ void Phase2::startPhase2() {
     visited.clear();
     get_follow_sets();
    // print_follow_sets();
-    ParsingTable *table = new ParsingTable(first,follow,productions);
+    ParsingTable *table = new ParsingTable(first, follow, productions, matches);
     table->build_the_table();
 }
 

@@ -14,7 +14,7 @@ public:
 
     static void startPhase1();
 
-    static void finishPhase1(vector<string> &);
+    static vector<string> finishPhase1(vector<string> &);
 
 };
 
