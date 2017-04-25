@@ -116,7 +116,7 @@ void ParsingTable::match() {
             pair<string, string> pair = make_pair(top, matches[i]);
             if (table.find(pair) != table.end()) {
                 vector<string> pro = table[pair];
-                if (pro[0] == "synch" || pro[0] == "\\L") {
+                if (pro[0] == "synch" ) {
                     parser_file << "Synch token pop the stack " << endl;
                     stack.pop_back();
                 } else if (pro[0] == "\\L") {
@@ -144,8 +144,21 @@ void ParsingTable::match() {
     parser_file << endl;
     int n = stack.size();
     while (n > 0) {
-        parser_file << "error missing " << stack[--n] << ", inserted" << endl;
-        stack.pop_back();
+        n--;
+        pair<string, string> pair = make_pair(stack[n],"$");
+
+        if (table.find(pair) != table.end()) {
+            vector<string> pro = table[pair];
+            if (pro[0] == "synch") {
+                parser_file << "Synch token pop the stack " << endl;
+                stack.pop_back();
+            } else if (pro[0] == "\\L") {
+                stack.pop_back();
+            }
+        }else {
+            parser_file << "error missing " << stack[n] << ", inserted" << endl;
+            stack.pop_back();
+        }
     }
     cout << "Output.txt file generated" << endl;
     parser_file.close();
