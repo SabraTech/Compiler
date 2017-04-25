@@ -94,13 +94,12 @@ void ParsingTable::print_parsing_table(void) {
 void ParsingTable::match(){
     vector<string> stack ;
     int i = 0;
-    stack.push_back("$");
     stack.push_back(start_symbol);
     ofstream parser_file;
     parser_file.open("Output.txt");
-    matches.push_back("$");
     while(!stack.empty() && i < matches.size() ){
-        for (auto x : stack) {
+        for (int j = stack.size()-1 ; j >= 0 ; j--) {
+            string x = stack[j];
             parser_file << x << " ";
         }
         parser_file << endl;
@@ -111,14 +110,14 @@ void ParsingTable::match(){
             if( top == matches[i]){
                 i++;
             }else{
-                parser_file << "missing terminal " << endl;
+                parser_file << "Missing terminal stack token is  " << top << " while token is " << matches[i] << endl;
             }
         }else{
             pair<string,string> pair = make_pair(top,matches[i]);
             if(table.find(pair) != table.end()){
                 vector<string> pro = table[pair];
                 if(pro[0] == "synch" || pro[0] == "\\L"){
-                    parser_file << " synch token pop the stack " << endl;
+                    parser_file << "Synch token pop the stack " << endl;
                     stack.pop_back();
                 }else if(pro[0] == "\\L"){
                     stack.pop_back();
@@ -133,7 +132,7 @@ void ParsingTable::match(){
             }
             else
             {
-                parser_file << " discarded token " << endl;
+                parser_file << "Discarded token " << matches[i] << endl;
 
                 //empty entry in the table so discard the input;
                 i++;
