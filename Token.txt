@@ -1,18 +1,19 @@
 int
 id
-,
-id
-,
-id
-,
-id
 ;
-while
+id
+assign
+num
+;
+if
 (
 id
 relop
 num
 )
 {
-no match possible
+id
+assign
+num
+;
 }

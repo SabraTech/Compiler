@@ -19,7 +19,7 @@ void Phase2::startPhase2() {
     visited.clear();
     get_follow_sets();
    // print_follow_sets();
-    ParsingTable *table = new ParsingTable(first, follow, productions, matches);
+    ParsingTable *table = new ParsingTable(first, follow, productions, matches,terminals,start_symbol);
     table->build_the_table();
 }
 

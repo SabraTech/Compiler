@@ -6,27 +6,27 @@
 #include "Utilities.h"
 #include "ParsingTable.h"
 
-/*!
- *
- * @param first_sets
- * @param follow_sets
- * @param productions
- * @return
- */
 ParsingTable::ParsingTable(unordered_map<string, unordered_set<string>> &first_sets,
                            unordered_map<string, unordered_set<string>> &follow_sets,
                            unordered_map<string, vector<vector<string>>> &productions,
-                           vector<string> &input_maches) {
+                           vector<string> &input_maches,
+                           unordered_set<string> &terminals,
+                           string &start_symbol
+) {
     this->first_sets = first_sets;
     this->follow_sets = follow_sets;
     this->productions = productions;
     this->matches = input_maches;
+    this->terminals = terminals;
+    this->start_symbol = start_symbol;
 }
 
 void ParsingTable::build_the_table(void) {
     build_step1();
     build_step2();
-    print_parsing_table();
+    build_step3();
+    match();
+   // print_parsing_table();
 }
 
 void ParsingTable::build_step1(void) {
@@ -90,3 +90,58 @@ void ParsingTable::print_parsing_table(void) {
         cout << endl;
     }
 }
+
+void ParsingTable::match(){
+    vector<string> stack ;
+    int i = 0;
+    stack.push_back("$");
+    stack.push_back(start_symbol);
+    ofstream parser_file;
+    parser_file.open("Output.txt");
+    matches.push_back("$");
+    while(!stack.empty() && i < matches.size() ){
+        for (auto x : stack) {
+            parser_file << x << " ";
+        }
+        parser_file << endl;
+        string top = stack[stack.size()-1];
+        if(terminals.find(top) != terminals.end()){
+            // top is terminal
+            stack.pop_back();
+            if( top == matches[i]){
+                i++;
+            }else{
+                parser_file << "missing terminal " << endl;
+            }
+        }else{
+            pair<string,string> pair = make_pair(top,matches[i]);
+            if(table.find(pair) != table.end()){
+                vector<string> pro = table[pair];
+                if(pro[0] == "synch" || pro[0] == "\\L"){
+                    parser_file << " synch token pop the stack " << endl;
+                    stack.pop_back();
+                }else if(pro[0] == "\\L"){
+                    stack.pop_back();
+                }else{
+                    stack.pop_back();
+                    for(int j = pro.size()-1 ; j >= 0 ; j--){
+                        stack.push_back(pro[j]);
+                    }
+
+                }
+
+            }
+            else
+            {
+                parser_file << " discarded token " << endl;
+
+                //empty entry in the table so discard the input;
+                i++;
+            }
+        }
+    }
+    cout << "output.txt generated" << endl;
+    parser_file.close();
+}
+
+

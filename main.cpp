@@ -5,7 +5,6 @@
 #include "bits/stdc++.h"
 #include "Phase1.h"
 #include "Phase2.h"
-#include "Parser.h"
 #include "Utilities.h"
 
 using namespace std;
