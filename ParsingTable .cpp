@@ -26,7 +26,7 @@ void ParsingTable::build_the_table(void) {
     build_step2();
     build_step3();
     match();
-   // print_parsing_table();
+    // print_parsing_table();
 }
 
 void ParsingTable::build_step1(void) {
@@ -91,47 +91,45 @@ void ParsingTable::print_parsing_table(void) {
     }
 }
 
-void ParsingTable::match(){
-    vector<string> stack ;
+void ParsingTable::match() {
+    vector<string> stack;
     int i = 0;
     stack.push_back(start_symbol);
     ofstream parser_file;
     parser_file.open("Output.txt");
-    while(!stack.empty() && i < matches.size() ){
-        for (int j = stack.size()-1 ; j >= 0 ; j--) {
+    while (!stack.empty() && i < matches.size()) {
+        for (int j = stack.size() - 1; j >= 0; j--) {
             string x = stack[j];
             parser_file << x << " ";
         }
         parser_file << endl;
-        string top = stack[stack.size()-1];
-        if(terminals.find(top) != terminals.end()){
+        string top = stack[stack.size() - 1];
+        if (terminals.find(top) != terminals.end()) {
             // top is terminal
             stack.pop_back();
-            if( top == matches[i]){
+            if (top == matches[i]) {
                 i++;
-            }else{
+            } else {
                 parser_file << "Missing terminal stack token is  " << top << " while token is " << matches[i] << endl;
             }
-        }else{
-            pair<string,string> pair = make_pair(top,matches[i]);
-            if(table.find(pair) != table.end()){
+        } else {
+            pair<string, string> pair = make_pair(top, matches[i]);
+            if (table.find(pair) != table.end()) {
                 vector<string> pro = table[pair];
-                if(pro[0] == "synch" || pro[0] == "\\L"){
+                if (pro[0] == "synch" || pro[0] == "\\L") {
                     parser_file << "Synch token pop the stack " << endl;
                     stack.pop_back();
-                }else if(pro[0] == "\\L"){
+                } else if (pro[0] == "\\L") {
                     stack.pop_back();
-                }else{
+                } else {
                     stack.pop_back();
-                    for(int j = pro.size()-1 ; j >= 0 ; j--){
+                    for (int j = pro.size() - 1; j >= 0; j--) {
                         stack.push_back(pro[j]);
                     }
 
                 }
 
-            }
-            else
-            {
+            } else {
                 parser_file << "Discarded token " << matches[i] << endl;
 
                 //empty entry in the table so discard the input;
@@ -139,7 +137,17 @@ void ParsingTable::match(){
             }
         }
     }
-    cout << "output.txt generated" << endl;
+    for (int j = stack.size() - 1; j >= 0; j--) {
+        string x = stack[j];
+        parser_file << x << " ";
+    }
+    parser_file << endl;
+    int n = stack.size();
+    while (n > 0) {
+        parser_file << "error missing " << stack[--n] << ", inserted" << endl;
+        stack.pop_back();
+    }
+    cout << "Output.txt file generated" << endl;
     parser_file.close();
 }
 

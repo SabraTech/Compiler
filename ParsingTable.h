@@ -13,8 +13,7 @@ class ParsingTable {
 public:
 
     ParsingTable(unordered_map<string, unordered_set<string>> &, unordered_map<string, unordered_set<string>> &,
-                 unordered_map<string, vector<vector<string>>> &, vector<string> &
-    ,  unordered_set<string> &, string &);
+                 unordered_map<string, vector<vector<string>>> &, vector<string> &, unordered_set<string> &, string &);
 
     void build_the_table(void);
 
@@ -35,6 +34,7 @@ private:
     void build_step3(void);
 
     void print_parsing_table(void);
+
     void match();
 
 };
