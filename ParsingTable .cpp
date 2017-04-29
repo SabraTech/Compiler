@@ -92,6 +92,7 @@ void ParsingTable::print_parsing_table(void) {
 }
 
 void ParsingTable::match() {
+
     vector<string> stack;
     int i = 0;
     stack.push_back(start_symbol);
